@@ -1,1 +1,757 @@
-h
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>n8nCloud — Managed n8n Hosting</title>
+  <meta name="description" content="Fast, reliable managed n8n hosting. Deploy your workflow automation in seconds with zero maintenance, managed PostgreSQL, and 99.9% uptime." />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts: Inter + JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background-color: #080D1A;
+      color: #F1F5F9;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .font-mono { font-family: 'JetBrains Mono', 'Fira Code', monospace; }
+
+    /* === Animated background orbs === */
+    @keyframes drift-a {
+      0%,100% { transform: translate(0,0) scale(1);    opacity:.20; }
+      40%      { transform: translate(40px,-30px) scale(1.08); opacity:.28; }
+      70%      { transform: translate(-25px,20px) scale(.93); opacity:.13; }
+    }
+    @keyframes drift-b {
+      0%,100% { transform: translate(0,0) scale(1);     opacity:.15; }
+      35%      { transform: translate(-50px,25px) scale(1.06); opacity:.22; }
+      65%      { transform: translate(30px,-35px) scale(.95); opacity:.10; }
+    }
+    @keyframes drift-c {
+      0%,100% { transform: translate(0,0) scale(1);    opacity:.10; }
+      50%      { transform: translate(20px,30px) scale(1.12); opacity:.18; }
+    }
+    .orb-a { animation: drift-a  9s ease-in-out infinite; }
+    .orb-b { animation: drift-b 13s ease-in-out infinite; }
+    .orb-c { animation: drift-c 11s ease-in-out infinite 1.5s; }
+
+    /* === Dot grid overlay === */
+    .dot-grid {
+      background-image: radial-gradient(rgba(99,102,241,.18) 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+
+    /* === Gradient text === */
+    .text-gradient {
+      background: linear-gradient(135deg, #818CF8 0%, #C084FC 55%, #E879F9 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* === Primary CTA button === */
+    .btn-cta {
+      background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+      transition: transform .2s, box-shadow .2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-cta::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg,
+        rgba(255,255,255,0) 20%,
+        rgba(255,255,255,.14) 50%,
+        rgba(255,255,255,0) 80%);
+      transform: translateX(-100%);
+      transition: transform .55s ease;
+    }
+    .btn-cta:hover::before  { transform: translateX(100%); }
+    .btn-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 40px rgba(99,102,241,.45);
+    }
+    .btn-cta:active { transform: translateY(0); }
+
+    /* === Ghost button === */
+    .btn-ghost {
+      border: 1px solid rgba(255,255,255,.12);
+      transition: border-color .2s, color .2s, background .2s;
+    }
+    .btn-ghost:hover {
+      border-color: rgba(99,102,241,.5);
+      color: #fff;
+      background: rgba(99,102,241,.06);
+    }
+
+    /* === Pricing card glow === */
+    .pricing-card {
+      background: linear-gradient(160deg, #111D33 0%, #0D1424 100%);
+      box-shadow:
+        0 0 0 1px rgba(99,102,241,.22),
+        0 0 60px -15px rgba(99,102,241,.30),
+        0 24px 64px -20px rgba(0,0,0,.60);
+    }
+
+    /* === Feature card === */
+    .feature-card {
+      background: #0D1424;
+      border: 1px solid rgba(255,255,255,.07);
+      transition: transform .3s, border-color .3s, box-shadow .3s;
+    }
+    .feature-card:hover { transform: translateY(-5px); }
+
+    .fc-indigo:hover  { border-color:rgba(99,102,241,.40); box-shadow:0 8px 40px -8px rgba(99,102,241,.25); }
+    .fc-violet:hover  { border-color:rgba(139,92,246,.40); box-shadow:0 8px 40px -8px rgba(139,92,246,.25); }
+    .fc-emerald:hover { border-color:rgba(52,211,153,.40); box-shadow:0 8px 40px -8px rgba(52,211,153,.20); }
+    .fc-amber:hover   { border-color:rgba(251,191,36,.40);  box-shadow:0 8px 40px -8px rgba(251,191,36,.20); }
+
+    /* === Toggle switch === */
+    .toggle-track  { transition: background-color .3s ease; }
+    .toggle-thumb  { transition: transform .3s cubic-bezier(.34,1.56,.64,1); }
+    .toggle-thumb.is-on { transform: translateX(22px); }
+
+    /* === Price number animation === */
+    #price-num {
+      display: inline-block;
+      transition: opacity .18s ease, transform .18s ease;
+    }
+    #price-num.fading {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+
+    /* === Add-on row highlight === */
+    #addon-row { transition: border-color .3s, background .3s; }
+    #addon-row.active {
+      border-color: rgba(99,102,241,.40) !important;
+      background: rgba(99,102,241,.06) !important;
+    }
+
+    /* === Navbar scroll === */
+    #navbar { transition: background .3s, box-shadow .3s, border-color .3s; }
+    #navbar.scrolled {
+      background: rgba(8,13,26,.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(99,102,241,.14);
+      box-shadow: 0 4px 30px rgba(0,0,0,.35);
+    }
+
+    /* === Fade-up entrance animations === */
+    @keyframes fade-up {
+      from { opacity:0; transform:translateY(22px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+    .fade-up           { animation: fade-up .7s ease both; }
+    .delay-1           { animation-delay: .10s; }
+    .delay-2           { animation-delay: .22s; }
+    .delay-3           { animation-delay: .36s; }
+    .delay-4           { animation-delay: .50s; }
+    .delay-5           { animation-delay: .64s; }
+
+    /* === Mobile menu === */
+    #mobile-menu {
+      display: none;
+      opacity: 0;
+      transform: translateY(-6px);
+      transition: opacity .25s, transform .25s;
+    }
+    #mobile-menu.open {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Ping animation for the status dot */
+    @keyframes ping {
+      75%, 100% { transform: scale(2); opacity: 0; }
+    }
+    .animate-ping { animation: ping 1.4s cubic-bezier(0,0,.2,1) infinite; }
+
+    /* Scroll-triggered reveal for feature cards */
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+
+<body class="min-h-screen">
+
+<!-- ╔══════════════════════════════════════════╗ -->
+<!-- ║               NAVBAR                    ║ -->
+<!-- ╚══════════════════════════════════════════╝ -->
+<nav id="navbar" class="fixed top-0 left-0 right-0 z-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+
+      <!-- Logo -->
+      <a href="#" class="flex items-center gap-2.5 group flex-shrink-0">
+        <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center shadow-lg">
+          <!-- Lightning bolt icon -->
+          <svg width="15" height="15" viewBox="0 0 20 20" fill="none">
+            <path d="M11 2L3 12h6l-1 6 9-10h-6l1-6z" fill="white" stroke="white" stroke-width=".5" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <span class="font-bold text-[17px] text-white tracking-tight leading-none select-none">
+          n8n<span class="text-indigo-400">Cloud</span>
+        </span>
+      </a>
+
+      <!-- Desktop links -->
+      <div class="hidden md:flex items-center gap-8">
+        <a href="#features" class="text-slate-400 hover:text-white text-sm font-medium transition-colors duration-200">Features</a>
+        <a href="#pricing"  class="text-slate-400 hover:text-white text-sm font-medium transition-colors duration-200">Pricing</a>
+        <a href="#footer"   class="text-slate-400 hover:text-white text-sm font-medium transition-colors duration-200">Contact</a>
+      </div>
+
+      <!-- Desktop CTA -->
+      <a href="#pricing" class="hidden md:inline-flex btn-cta text-white text-sm font-semibold px-5 py-2 rounded-lg">
+        Get Started →
+      </a>
+
+      <!-- Hamburger (mobile) -->
+      <button id="hamburger" class="md:hidden text-slate-400 hover:text-white p-1.5 rounded-lg transition-colors" aria-label="Toggle menu">
+        <svg id="ham-open"  class="w-6 h-6"        fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        <svg id="ham-close" class="w-6 h-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile dropdown -->
+  <div id="mobile-menu" class="md:hidden absolute top-full left-0 right-0 border-b border-slate-800 px-4 py-3" style="background:#0D1424;">
+    <div class="flex flex-col gap-1">
+      <a href="#features" class="mob-link text-slate-300 hover:text-white hover:bg-white/5 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors">Features</a>
+      <a href="#pricing"  class="mob-link text-slate-300 hover:text-white hover:bg-white/5 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors">Pricing</a>
+      <a href="#footer"   class="mob-link text-slate-300 hover:text-white hover:bg-white/5 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors">Contact</a>
+      <div class="pt-2 mt-1 border-t border-slate-800">
+        <a href="#pricing" class="mob-link btn-cta block text-center text-white text-sm font-bold px-5 py-2.5 rounded-lg">Get Started Now →</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+
+<!-- ╔══════════════════════════════════════════╗ -->
+<!-- ║                 HERO                    ║ -->
+<!-- ╚══════════════════════════════════════════╝ -->
+<section class="relative min-h-screen flex items-center justify-center overflow-hidden dot-grid pt-16">
+
+  <!-- Ambient orbs -->
+  <div class="absolute inset-0 overflow-hidden pointer-events-none select-none" aria-hidden="true">
+    <div class="orb-a absolute top-[22%] left-[12%]  w-[520px] h-[520px] rounded-full bg-indigo-700  blur-[110px]"></div>
+    <div class="orb-b absolute bottom-[25%] right-[8%] w-[440px] h-[440px] rounded-full bg-violet-700  blur-[95px]"></div>
+    <div class="orb-c absolute top-[52%] left-[48%]  w-[320px] h-[320px] rounded-full bg-purple-800  blur-[80px]"></div>
+  </div>
+
+  <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-20">
+
+    <!-- Status badge -->
+    <div class="fade-up delay-1 inline-flex items-center gap-2.5 bg-indigo-500/10 border border-indigo-500/25 rounded-full px-4 py-1.5 text-sm font-medium text-indigo-300 mb-8 cursor-default select-none">
+      <span class="relative flex h-2 w-2">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+        <span class="relative flex h-2 w-2 rounded-full bg-emerald-400"></span>
+      </span>
+      All systems operational &nbsp;·&nbsp; Managed hosting, ready instantly
+    </div>
+
+    <!-- Main headline -->
+    <h1 class="fade-up delay-2 text-5xl sm:text-6xl lg:text-[72px] font-extrabold tracking-tight leading-[1.08] mb-6">
+      Automate Your Workflow<br/>
+      <span class="text-gradient">with Managed n8n</span>
+    </h1>
+
+    <!-- Subheadline -->
+    <p class="fade-up delay-3 text-lg sm:text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed mb-10">
+      Deploy your n8n instance in under 60 seconds. Blazing-fast servers, managed PostgreSQL, automatic updates — all perfectly optimised for n8n so you focus purely on building automations.
+    </p>
+
+    <!-- CTA row -->
+    <div class="fade-up delay-4 flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+      <a href="#pricing" class="btn-cta text-white font-bold text-base px-8 py-3.5 rounded-xl w-full sm:w-auto text-center">
+        Get Started Now →
+      </a>
+      <a href="#features" class="btn-ghost text-slate-400 font-medium text-base px-8 py-3.5 rounded-xl w-full sm:w-auto text-center flex items-center justify-center gap-2">
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        Explore Features
+      </a>
+    </div>
+
+    <!-- Stats row -->
+    <div class="fade-up delay-5 border-t border-slate-800/80 pt-10">
+      <div class="grid grid-cols-3 gap-4 sm:gap-8 max-w-md mx-auto">
+        <div class="text-center">
+          <div class="font-mono text-2xl sm:text-3xl font-bold text-white">99.9%</div>
+          <div class="text-slate-500 text-xs sm:text-sm mt-1">Uptime SLA</div>
+        </div>
+        <div class="text-center border-x border-slate-800">
+          <div class="font-mono text-2xl sm:text-3xl font-bold text-white">&lt;60s</div>
+          <div class="text-slate-500 text-xs sm:text-sm mt-1">Deploy Time</div>
+        </div>
+        <div class="text-center">
+          <div class="font-mono text-2xl sm:text-3xl font-bold text-white">৳100</div>
+          <div class="text-slate-500 text-xs sm:text-sm mt-1">Per Month</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ╔══════════════════════════════════════════╗ -->
+<!-- ║              FEATURES                   ║ -->
+<!-- ╚══════════════════════════════════════════╝ -->
+<section id="features" style="background:#0B1120;" class="py-24 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-7xl mx-auto">
+
+    <!-- Section header -->
+    <div class="text-center mb-16">
+      <p class="text-indigo-400 text-xs font-bold tracking-[.2em] uppercase mb-3">Why Choose Us</p>
+      <h2 class="text-4xl sm:text-5xl font-bold text-white leading-tight mb-4">
+        Everything handled.<br/><span class="text-slate-500 font-medium">You just automate.</span>
+      </h2>
+      <p class="text-slate-400 text-lg max-w-xl mx-auto leading-relaxed">
+        We built the ideal environment for n8n — so your workflows run faster, safer, and without interruption.
+      </p>
+    </div>
+
+    <!-- Feature cards grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 xl:gap-8">
+
+      <!-- Card 1 — Managed PostgreSQL -->
+      <div class="reveal feature-card fc-indigo rounded-2xl p-7">
+        <div class="flex items-start gap-5">
+          <div class="w-12 h-12 shrink-0 rounded-xl bg-indigo-500/10 border border-indigo-500/15 flex items-center justify-center">
+            <svg class="w-6 h-6 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 5.625c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125"/>
+            </svg>
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center gap-2 mb-2 flex-wrap">
+              <h3 class="text-[17px] font-semibold text-white">Managed PostgreSQL Database</h3>
+              <span class="text-[11px] font-bold text-indigo-400 bg-indigo-500/10 border border-indigo-500/20 px-2 py-0.5 rounded-full">Fast &amp; Secure</span>
+            </div>
+            <p class="text-slate-400 text-sm leading-relaxed">Your workflows run on a high-performance PostgreSQL database with automated daily backups, AES-256 encryption at rest, and query optimisation — fully managed, zero effort from you.</p>
+            <ul class="mt-4 space-y-1.5">
+              <li class="flex items-center gap-2 text-xs text-slate-500">
+                <svg class="w-3.5 h-3.5 text-indigo-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                Daily automated backups with point-in-time recovery
+              </li>
+              <li class="flex items-center gap-2 text-xs text-slate-500">
+                <svg class="w-3.5 h-3.5 text-indigo-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                AES-256 encryption at rest &amp; in transit
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2 — Isolated Environment -->
+      <div class="reveal feature-card fc-violet rounded-2xl p-7" style="transition-delay:.1s">
+        <div class="flex items-start gap-5">
+          <div class="w-12 h-12 shrink-0 rounded-xl bg-violet-500/10 border border-violet-500/15 flex items-center justify-center">
+            <svg class="w-6 h-6 text-violet-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/>
+            </svg>
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center gap-2 mb-2 flex-wrap">
+              <h3 class="text-[17px] font-semibold text-white">Isolated Environment</h3>
+              <span class="text-[11px] font-bold text-violet-400 bg-violet-500/10 border border-violet-500/20 px-2 py-0.5 rounded-full">Completely Private</span>
+            </div>
+            <p class="text-slate-400 text-sm leading-relaxed">Your n8n instance runs in a fully containerised, isolated environment. No shared processes, no data leakage between tenants — your workflows, credentials, and API keys stay yours alone.</p>
+            <ul class="mt-4 space-y-1.5">
+              <li class="flex items-center gap-2 text-xs text-slate-500">
+                <svg class="w-3.5 h-3.5 text-violet-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                Docker-isolated containers per customer
+              </li>
+              <li class="flex items-center gap-2 text-xs text-slate-500">
+                <svg class="w-3.5 h-3.5 text-violet-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                Zero cross-tenant data access, ever
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3 — Zero Maintenance -->
+      <div class="reveal feature-card fc-emerald rounded-2xl p-7" style="transition-delay:.2s">
+        <div class="flex items-start gap-5">
+          <div class="w-12 h-12 shrink-0 rounded-xl bg-emerald-500/10 border border-emerald-500/15 flex items-center justify-center">
+            <svg class="w-6 h-6 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437l1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008z"/>
+            </svg>
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center gap-2 mb-2 flex-wrap">
+              <h3 class="text-[17px] font-semibold text-white">Zero Maintenance</h3>
+              <span class="text-[11px] font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-full">Hands-off</span>
+            </div>
+            <p class="text-slate-400 text-sm leading-relaxed">Forget server patches, n8n version upgrades, or SSL renewals. We handle every aspect of infrastructure management automatically — with zero downtime during updates.</p>
+            <ul class="mt-4 space-y-1.5">
+              <li class="flex items-center gap-2 text-xs text-slate-500">
+                <svg class="w-3.5 h-3.5 text-emerald-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                Automatic n8n version upgrades
+              </li>
+              <li class="flex items-center gap-2 text-xs text-slate-500">
+                <svg class="w-3.5 h-3.5 text-emerald-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                SSL auto-renewal &amp; security patches
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 4 — Smart Storage -->
+      <div class="reveal feature-card fc-amber rounded-2xl p-7" style="transition-delay:.3s">
+        <div class="flex items-start gap-5">
+          <div class="w-12 h-12 shrink-0 rounded-xl bg-amber-500/10 border border-amber-500/15 flex items-center justify-center">
+            <svg class="w-6 h-6 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/>
+            </svg>
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center gap-2 mb-2 flex-wrap">
+              <h3 class="text-[17px] font-semibold text-white">Smart Storage &amp; Auto-Pruning</h3>
+              <span class="text-[11px] font-bold text-amber-400 bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 rounded-full">Optimised</span>
+            </div>
+            <p class="text-slate-400 text-sm leading-relaxed">Our intelligent auto-pruning system continuously clears stale execution logs, keeping your instance lean and at peak performance — more speed, less storage bloat, zero manual work.</p>
+            <ul class="mt-4 space-y-1.5">
+              <li class="flex items-center gap-2 text-xs text-slate-500">
+                <svg class="w-3.5 h-3.5 text-amber-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                Configurable pruning schedule
+              </li>
+              <li class="flex items-center gap-2 text-xs text-slate-500">
+                <svg class="w-3.5 h-3.5 text-amber-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                Peak performance, guaranteed always
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ╔══════════════════════════════════════════╗ -->
+<!-- ║               PRICING                   ║ -->
+<!-- ╚══════════════════════════════════════════╝ -->
+<section id="pricing" class="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden" style="background:#080D1A;">
+
+  <!-- Background glow blob -->
+  <div class="absolute inset-0 flex items-center justify-center pointer-events-none" aria-hidden="true">
+    <div class="w-[700px] h-[700px] rounded-full bg-indigo-800/10 blur-[110px]"></div>
+  </div>
+
+  <div class="relative max-w-[500px] mx-auto">
+
+    <!-- Section header -->
+    <div class="text-center mb-12">
+      <p class="text-indigo-400 text-xs font-bold tracking-[.2em] uppercase mb-3">Pricing</p>
+      <h2 class="text-4xl sm:text-5xl font-bold text-white leading-tight mb-4">Simple, honest pricing.</h2>
+      <p class="text-slate-400 text-base">No hidden fees. No long-term lock-in. Cancel anytime.</p>
+    </div>
+
+    <!-- Pricing card -->
+    <div class="pricing-card rounded-3xl overflow-hidden">
+
+      <!-- Top accent gradient bar -->
+      <div class="h-[3px] w-full bg-gradient-to-r from-indigo-500 via-violet-500 to-fuchsia-500"></div>
+
+      <div class="p-7 sm:p-9">
+
+        <!-- Plan header -->
+        <div class="flex items-start justify-between mb-7 gap-3">
+          <div>
+            <h3 class="text-xl font-bold text-white mb-1">Starter Plan</h3>
+            <p class="text-slate-500 text-sm">Perfect for freelancers &amp; growing teams</p>
+          </div>
+          <span class="shrink-0 text-[11px] font-bold text-indigo-300 bg-indigo-500/15 border border-indigo-500/25 px-3 py-1 rounded-full whitespace-nowrap">Most Popular</span>
+        </div>
+
+        <!-- Price display -->
+        <div class="mb-8">
+          <div class="flex items-baseline gap-1">
+            <span class="font-mono text-3xl font-semibold text-slate-300">৳</span>
+            <span id="price-num" class="font-mono text-[82px] leading-none font-extrabold text-white">100</span>
+            <div class="flex flex-col ml-1">
+              <span class="text-slate-400 text-sm font-medium">/month</span>
+              <span class="text-slate-600 text-xs">billed monthly</span>
+            </div>
+          </div>
+          <p id="price-note" class="text-slate-500 text-xs mt-2">Base plan · All features included below</p>
+        </div>
+
+        <!-- Feature checklist -->
+        <ul class="space-y-3 mb-7">
+          <li class="flex items-center gap-3">
+            <span class="w-5 h-5 shrink-0 rounded-full bg-indigo-500/15 border border-indigo-500/20 flex items-center justify-center">
+              <svg class="w-3 h-3 text-indigo-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+            </span>
+            <span class="text-slate-300 text-sm">1 Dedicated n8n Instance</span>
+          </li>
+          <li class="flex items-center gap-3">
+            <span class="w-5 h-5 shrink-0 rounded-full bg-indigo-500/15 border border-indigo-500/20 flex items-center justify-center">
+              <svg class="w-3 h-3 text-indigo-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+            </span>
+            <span id="storage-label" class="text-slate-300 text-sm">5GB Storage</span>
+          </li>
+          <li class="flex items-center gap-3">
+            <span class="w-5 h-5 shrink-0 rounded-full bg-indigo-500/15 border border-indigo-500/20 flex items-center justify-center">
+              <svg class="w-3 h-3 text-indigo-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+            </span>
+            <span class="text-slate-300 text-sm">Shared PostgreSQL Database</span>
+          </li>
+          <li class="flex items-center gap-3">
+            <span class="w-5 h-5 shrink-0 rounded-full bg-indigo-500/15 border border-indigo-500/20 flex items-center justify-center">
+              <svg class="w-3 h-3 text-indigo-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+            </span>
+            <span class="text-slate-300 text-sm">Auto-Pruning Enabled</span>
+          </li>
+          <li class="flex items-center gap-3">
+            <span class="w-5 h-5 shrink-0 rounded-full bg-indigo-500/15 border border-indigo-500/20 flex items-center justify-center">
+              <svg class="w-3 h-3 text-indigo-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+            </span>
+            <span class="text-slate-300 text-sm">99.9% Uptime Guarantee</span>
+          </li>
+          <li class="flex items-center gap-3">
+            <span class="w-5 h-5 shrink-0 rounded-full bg-indigo-500/15 border border-indigo-500/20 flex items-center justify-center">
+              <svg class="w-3 h-3 text-indigo-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+            </span>
+            <span class="text-slate-300 text-sm">Zero Maintenance Required</span>
+          </li>
+        </ul>
+
+        <!-- Divider -->
+        <div class="border-t border-white/[.06] mb-6"></div>
+
+        <!-- ★ Add-on Toggle Row ★ -->
+        <div id="addon-row" class="rounded-xl border border-slate-700/50 p-4 mb-6" style="background:#0A0E1A;">
+          <div class="flex items-center justify-between gap-4">
+            <div>
+              <p class="text-white text-sm font-semibold leading-tight">+5GB Extra Storage</p>
+              <p class="text-slate-500 text-xs mt-0.5">
+                Upgrade to <strong class="text-slate-400 font-semibold">10GB total</strong>
+                &nbsp;·&nbsp;
+                <span class="text-indigo-400 font-semibold">+৳50/mo</span>
+              </p>
+            </div>
+            <!-- Toggle switch button -->
+            <button
+              id="storage-toggle"
+              role="switch"
+              aria-checked="false"
+              aria-label="Add 5GB extra storage for ৳50/month"
+              onclick="handleToggle()"
+              class="relative w-12 h-6 rounded-full toggle-track shrink-0 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-[#0A0E1A]"
+              style="background:#334155;"
+            >
+              <span id="toggle-thumb" class="absolute top-1 left-1 w-4 h-4 bg-white rounded-full toggle-thumb shadow"></span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Order CTA -->
+        <a href="mailto:order@n8ncloud.com" class="btn-cta block w-full text-center text-white font-bold text-base py-3.5 rounded-xl mb-3">
+          Order Now — Get Instant Access
+        </a>
+
+        <p class="text-center text-slate-600 text-xs">No credit card required &nbsp;·&nbsp; Setup in under 60 seconds</p>
+
+      </div>
+    </div>
+
+    <!-- Trust signals row -->
+    <div class="mt-8 flex flex-wrap items-center justify-center gap-6">
+      <span class="flex items-center gap-1.5 text-slate-600 text-xs">
+        <svg class="w-3.5 h-3.5 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+        Secure Payments
+      </span>
+      <span class="flex items-center gap-1.5 text-slate-600 text-xs">
+        <svg class="w-3.5 h-3.5 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        Cancel Anytime
+      </span>
+      <span class="flex items-center gap-1.5 text-slate-600 text-xs">
+        <svg class="w-3.5 h-3.5 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+        24/7 Support
+      </span>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ╔══════════════════════════════════════════╗ -->
+<!-- ║               FOOTER                    ║ -->
+<!-- ╚══════════════════════════════════════════╝ -->
+<footer id="footer" class="py-14 px-4 sm:px-6 lg:px-8" style="background:#0B1120; border-top:1px solid rgba(255,255,255,.05);">
+  <div class="max-w-7xl mx-auto">
+
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-10 mb-10">
+
+      <!-- Brand column -->
+      <div>
+        <div class="flex items-center gap-2.5 mb-4">
+          <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center">
+            <svg width="15" height="15" viewBox="0 0 20 20" fill="none">
+              <path d="M11 2L3 12h6l-1 6 9-10h-6l1-6z" fill="white" stroke="white" stroke-width=".5" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <span class="font-bold text-[17px] text-white">n8n<span class="text-indigo-400">Cloud</span></span>
+        </div>
+        <p class="text-slate-500 text-sm leading-relaxed">Managed n8n hosting built for automation builders. Fast, private, and zero-maintenance.</p>
+      </div>
+
+      <!-- Quick links -->
+      <div>
+        <p class="text-slate-300 text-sm font-semibold mb-4">Quick Links</p>
+        <div class="flex flex-col gap-2.5">
+          <a href="#features" class="text-slate-500 hover:text-slate-300 text-sm transition-colors">Features</a>
+          <a href="#pricing"  class="text-slate-500 hover:text-slate-300 text-sm transition-colors">Pricing</a>
+          <a href="mailto:support@n8ncloud.com" class="text-slate-500 hover:text-slate-300 text-sm transition-colors">Support</a>
+        </div>
+      </div>
+
+      <!-- Legal -->
+      <div>
+        <p class="text-slate-300 text-sm font-semibold mb-4">Legal &amp; Contact</p>
+        <div class="flex flex-col gap-2.5">
+          <a href="#" class="text-slate-500 hover:text-slate-300 text-sm transition-colors">Terms of Service</a>
+          <a href="#" class="text-slate-500 hover:text-slate-300 text-sm transition-colors">Privacy Policy</a>
+          <a href="mailto:contact@n8ncloud.com" class="text-slate-500 hover:text-slate-300 text-sm transition-colors">Contact Us</a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="border-t border-white/[.04] pt-7 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <p class="text-slate-600 text-sm">&copy; 2025 n8nCloud. All rights reserved.</p>
+      <p class="text-slate-700 text-xs">Powered by automation. Built for builders.</p>
+    </div>
+
+  </div>
+</footer>
+
+
+<!-- ╔══════════════════════════════════════════╗ -->
+<!-- ║             JAVASCRIPT                  ║ -->
+<!-- ╚══════════════════════════════════════════╝ -->
+<script>
+  /* ─── 1. Navbar scroll effect ─── */
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 20);
+  }, { passive: true });
+
+  /* ─── 2. Mobile menu toggle ─── */
+  const hamburger  = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const hamOpen    = document.getElementById('ham-open');
+  const hamClose   = document.getElementById('ham-close');
+  let isMenuOpen   = false;
+
+  function openMobileMenu() {
+    isMenuOpen = true;
+    mobileMenu.style.display = 'block';
+    // Force reflow so the transition fires
+    void mobileMenu.offsetWidth;
+    mobileMenu.classList.add('open');
+    hamOpen.classList.add('hidden');
+    hamClose.classList.remove('hidden');
+  }
+
+  function closeMobileMenu() {
+    isMenuOpen = false;
+    mobileMenu.classList.remove('open');
+    hamOpen.classList.remove('hidden');
+    hamClose.classList.add('hidden');
+    // Hide after transition
+    setTimeout(() => { mobileMenu.style.display = 'none'; }, 260);
+  }
+
+  hamburger.addEventListener('click', () => {
+    isMenuOpen ? closeMobileMenu() : openMobileMenu();
+  });
+
+  // Close menu when any mobile link is clicked
+  document.querySelectorAll('.mob-link').forEach(link => {
+    link.addEventListener('click', closeMobileMenu);
+  });
+
+  /* ─── 3. Scroll-triggered reveal for feature cards ─── */
+  const revealEls = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => revealObserver.observe(el));
+
+  /* ─── 4. Pricing storage add-on toggle ─── */
+  let addonActive = false;
+
+  function handleToggle() {
+    addonActive = !addonActive;
+
+    const toggle  = document.getElementById('storage-toggle');
+    const thumb   = document.getElementById('toggle-thumb');
+    const priceEl = document.getElementById('price-num');
+    const noteEl  = document.getElementById('price-note');
+    const labelEl = document.getElementById('storage-label');
+    const addonRow = document.getElementById('addon-row');
+
+    if (addonActive) {
+      /* ── Activate ── */
+      toggle.setAttribute('aria-checked', 'true');
+      toggle.style.background = '#6366F1';
+      thumb.classList.add('is-on');
+      addonRow.classList.add('active');
+
+      // Animate price: fade out → change → fade in
+      priceEl.classList.add('fading');
+      setTimeout(() => {
+        priceEl.textContent = '150';
+        priceEl.classList.remove('fading');
+      }, 200);
+
+      noteEl.textContent  = 'Starter + Extra 5GB Storage add-on';
+      labelEl.innerHTML   = '<s style="color:#475569">5GB</s>&thinsp;→&thinsp;<span style="color:#818CF8;font-weight:600">10GB Storage</span>';
+
+    } else {
+      /* ── Deactivate ── */
+      toggle.setAttribute('aria-checked', 'false');
+      toggle.style.background = '#334155';
+      thumb.classList.remove('is-on');
+      addonRow.classList.remove('active');
+
+      priceEl.classList.add('fading');
+      setTimeout(() => {
+        priceEl.textContent = '100';
+        priceEl.classList.remove('fading');
+      }, 200);
+
+      noteEl.textContent = 'Base plan · All features included below';
+      labelEl.textContent = '5GB Storage';
+    }
+  }
+</script>
+
+</body>
+</html>
