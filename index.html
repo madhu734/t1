@@ -6,6 +6,9 @@
   <title>n8nCloud — Managed n8n Hosting</title>
   <meta name="description" content="Fast, reliable managed n8n hosting. Deploy your workflow automation in seconds with zero maintenance, managed PostgreSQL, and 99.9% uptime." />
 
+  <!-- n8n Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'%3E%3Crect width='60' height='60' rx='14' fill='%23EA4B71'/%3E%3Cpath d='M13 30c0-5.5 4.5-10 10-10s10 4.5 10 10-4.5 10-10 10' stroke='white' stroke-width='5' stroke-linecap='round' fill='none'/%3E%3Ccircle cx='23' cy='30' r='3.5' fill='white'/%3E%3Cpath d='M37 20c5.5 0 10 4.5 10 10s-4.5 10-10 10' stroke='white' stroke-width='5' stroke-linecap='round' fill='none'/%3E%3Ccircle cx='37' cy='30' r='3.5' fill='white'/%3E%3C/svg%3E" />
+
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 
@@ -117,6 +120,7 @@
     .fc-violet:hover  { border-color:rgba(139,92,246,.40); box-shadow:0 8px 40px -8px rgba(139,92,246,.25); }
     .fc-emerald:hover { border-color:rgba(52,211,153,.40); box-shadow:0 8px 40px -8px rgba(52,211,153,.20); }
     .fc-amber:hover   { border-color:rgba(251,191,36,.40);  box-shadow:0 8px 40px -8px rgba(251,191,36,.20); }
+    .fc-sky:hover     { border-color:rgba(56,189,248,.40);  box-shadow:0 8px 40px -8px rgba(56,189,248,.20); }
 
     /* === Toggle switch === */
     .toggle-track  { transition: background-color .3s ease; }
@@ -441,6 +445,42 @@
         </div>
       </div>
 
+      <!-- Card 5 — Custom Domain / Free Subdomain -->
+      <div class="reveal feature-card fc-sky rounded-2xl p-7 md:col-span-2" style="transition-delay:.4s">
+        <div class="flex items-start gap-5">
+          <div class="w-12 h-12 shrink-0 rounded-xl bg-sky-500/10 border border-sky-500/15 flex items-center justify-center">
+            <svg class="w-6 h-6 text-sky-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253M3 12c0 .778.099 1.533.284 2.253"/>
+            </svg>
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center gap-2 mb-2 flex-wrap">
+              <h3 class="text-[17px] font-semibold text-white">Your Own Domain or a Free Subdomain</h3>
+              <span class="text-[11px] font-bold text-sky-400 bg-sky-500/10 border border-sky-500/20 px-2 py-0.5 rounded-full">Flexible</span>
+            </div>
+            <p class="text-slate-400 text-sm leading-relaxed">Choose how your n8n instance is accessed. Bring your own custom domain for a fully branded experience, or use a free subdomain we provide — your instance will be live on <strong class="text-sky-300 font-semibold">yourname.tmadhu.me</strong> at no extra cost, ready in seconds.</p>
+            <ul class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-1.5">
+              <li class="flex items-center gap-2 text-xs text-slate-500">
+                <svg class="w-3.5 h-3.5 text-sky-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                Free <span class="font-semibold text-sky-400 mx-1">yourname.tmadhu.me</span> subdomain included
+              </li>
+              <li class="flex items-center gap-2 text-xs text-slate-500">
+                <svg class="w-3.5 h-3.5 text-sky-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                Connect your own custom domain (e.g. <em>n8n.yourbusiness.com</em>)
+              </li>
+              <li class="flex items-center gap-2 text-xs text-slate-500">
+                <svg class="w-3.5 h-3.5 text-sky-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                SSL certificate provisioned automatically
+              </li>
+              <li class="flex items-center gap-2 text-xs text-slate-500">
+                <svg class="w-3.5 h-3.5 text-sky-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                Switch or update your domain anytime
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -564,9 +604,17 @@
           </div>
         </div>
 
-        <!-- Order CTA -->
-        <a href="mailto:order@n8ncloud.com" class="btn-cta block w-full text-center text-white font-bold text-base py-3.5 rounded-xl mb-3">
-          Order Now — Get Instant Access
+        <!-- Order CTA — WhatsApp -->
+        <a
+          href="https://wa.me/01300890530?text=Hi%2C%20I'm%20interested%20in%20ordering%20a%20managed%20n8n%20hosting%20plan!"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-cta flex items-center justify-center gap-3 w-full text-center text-white font-bold text-base py-3.5 rounded-xl mb-3"
+        >
+          <svg class="w-5 h-5 shrink-0" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+          </svg>
+          Order on WhatsApp
         </a>
 
         <p class="text-center text-slate-600 text-xs">No credit card required &nbsp;·&nbsp; Setup in under 60 seconds</p>
@@ -632,6 +680,18 @@
           <a href="#" class="text-slate-500 hover:text-slate-300 text-sm transition-colors">Terms of Service</a>
           <a href="#" class="text-slate-500 hover:text-slate-300 text-sm transition-colors">Privacy Policy</a>
           <a href="mailto:contact@n8ncloud.com" class="text-slate-500 hover:text-slate-300 text-sm transition-colors">Contact Us</a>
+          <!-- WhatsApp -->
+          <a
+            href="https://wa.me/01300890530"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center gap-2 text-slate-500 hover:text-emerald-400 text-sm transition-colors group"
+          >
+            <svg class="w-4 h-4 text-emerald-500 group-hover:text-emerald-400 shrink-0" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+            WhatsApp: +01300890530
+          </a>
         </div>
       </div>
 
